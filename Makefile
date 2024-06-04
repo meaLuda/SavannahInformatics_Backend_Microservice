@@ -1,8 +1,8 @@
 .PHONY: all build docker-build docker-run clean
 
 # Define variables for the binary and image names
-BINARY_NAME=echo-api
-IMAGE_NAME=echo-api-image
+BINARY_NAME=orders-api
+IMAGE_NAME=orders-api-image
 
 # Default target: build the binary and Docker image
 docker-starter: docker-build docker-run
