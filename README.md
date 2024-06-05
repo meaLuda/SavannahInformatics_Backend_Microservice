@@ -63,3 +63,4 @@ Run `go test -v ./tests`
 
 ## CI/CD
 Using GitHub Actions for CI.
+![CI/CD Pipeline](ci_cd.png)
