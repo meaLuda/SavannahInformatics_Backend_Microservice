@@ -17,7 +17,6 @@ jobs:
         ports:
           - 5432:5432
         env:
-          POSTGRES_DB: ${{ secrets.DB_NAME }}
           POSTGRES_USER: ${{ secrets.DB_USER }}
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
         options: >-
@@ -47,6 +46,12 @@ jobs:
           echo "Waiting for PostgreSQL..."
           sleep 1
         done
+
+    - name: Create database
+      run: |
+        psql -h localhost -U ${{ secrets.DB_USER }} -c "CREATE DATABASE ${{ secrets.DB_NAME }};" postgres
+      env:
+        PGPASSWORD: ${{ secrets.DB_PASSWORD }}
 
     - name: Run Tests
       env:

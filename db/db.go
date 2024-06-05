@@ -1,7 +1,6 @@
 package db
 
 import (
-    "fmt"
     "log"
     "gorm.io/driver/postgres"
     "gorm.io/gorm"
@@ -12,8 +11,12 @@ import (
 var DB *gorm.DB
 
 func InitDB(config *Config) {
-    dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
-        config.DBHost, config.DBUser, config.DBPassword, config.DBName, config.DBPort)
+    dsn := "host=" + config.DBHost +
+           " user=" + config.DBUser +
+           " dbname=" + config.DBName +
+           " password=" + config.DBPassword +
+           " port=" + config.DBPort +
+           " sslmode=disable"
     var err error
     DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
     if err != nil {
