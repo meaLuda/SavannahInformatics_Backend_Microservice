@@ -11,6 +11,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:13
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_DB: ${{ secrets.DB_NAME }}
+          POSTGRES_USER: ${{ secrets.DB_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        options: >-
+          --health-cmd="pg_isready"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
 
     steps:
     - name: Checkout code
@@ -27,12 +41,20 @@ jobs:
     - name: Build
       run: make build
 
-    - name: Test
+    - name: Wait for PostgreSQL to be ready
+      run: |
+        while ! pg_isready -h localhost -p 5432 -U ${{ secrets.DB_USER }}; do
+          echo "Waiting for PostgreSQL..."
+          sleep 1
+        done
+
+    - name: Run Tests
       env:
         AFRRICAS_TALKING_SANDBOX_API_KEY: ${{ secrets.AFRRICAS_TALKING_SANDBOX_API_KEY }}
-        DB_HOST: ${{ secrets.DB_HOST }}
+        DB_HOST: localhost
+        DB_NAME: ${{ secrets.DB_NAME }}
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        DB_PORT: ${{ secrets.DB_PORT }}
+        DB_PORT: 5432
         DB_USER: ${{ secrets.DB_USER }}
         SHORT_CODE: ${{ secrets.SHORT_CODE }}
         SMS_PROVIDER_USERNAME: ${{ secrets.SMS_PROVIDER_USERNAME }}
