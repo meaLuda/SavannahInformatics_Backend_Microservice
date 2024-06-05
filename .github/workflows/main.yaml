@@ -28,4 +28,12 @@ jobs:
       run: make build
 
     - name: Test
+      env:
+        AFRRICAS_TALKING_SANDBOX_API_KEY: ${{ secrets.AFRRICAS_TALKING_SANDBOX_API_KEY }}
+        DB_HOST: ${{ secrets.DB_HOST }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DB_PORT: ${{ secrets.DB_PORT }}
+        DB_USER: ${{ secrets.DB_USER }}
+        SHORT_CODE: ${{ secrets.SHORT_CODE }}
+        SMS_PROVIDER_USERNAME: ${{ secrets.SMS_PROVIDER_USERNAME }}
       run: go test -v ./tests
