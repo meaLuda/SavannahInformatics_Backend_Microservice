@@ -2,3 +2,5 @@
 .exe
 *.toml
 /tmp
+*.live
+*.local

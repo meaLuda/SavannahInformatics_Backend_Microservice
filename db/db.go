@@ -23,8 +23,22 @@ func InitDB(config *Config) {
         log.Fatalf("Error connecting to database\n: %v", err)
     }
 	// Create tables
-    err = DB.AutoMigrate(&Customer{}, &Order{})
-    if err != nil {
-        log.Fatalf("Error migrating database: %v", err)
+    // Check if tables exist and perform auto-migration if they do not
+    if !DB.Migrator().HasTable(&Customer{}) {
+        log.Println("Customer table does not exist. Creating table...")
+        err = DB.AutoMigrate(&Customer{})
+        if err != nil {
+            log.Fatalf("Error migrating Customer table: %v", err)
+        }
     }
+
+    if !DB.Migrator().HasTable(&Order{}) {
+        log.Println("Order table does not exist. Creating table...")
+        err = DB.AutoMigrate(&Order{})
+        if err != nil {
+            log.Fatalf("Error migrating Order table: %v", err)
+        }
+    }
+
+    log.Println("Database initialization complete")
 }
