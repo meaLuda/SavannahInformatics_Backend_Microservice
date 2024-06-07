@@ -11,7 +11,7 @@ A simple service for managing customers and orders with REST API.
 3. Run `go mod tidy` && `go run main.go`.
 
 ## Endpoints
-
+Running Locally: `localhost:8080` Running in Server `20.121.68.15:8080`
 - POST `/api/v1/customers` - Create a new customer.
 
     Data Structure

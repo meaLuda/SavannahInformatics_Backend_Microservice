@@ -23,8 +23,8 @@ func InitDB(config *Config) {
         log.Fatalf("Error connecting to database\n: %v", err)
     }
 	// Create tables
-    err = DB.AutoMigrate(&Customer{}, &Order{})
-    if err != nil {
-        log.Fatalf("Error migrating database: %v", err)
-    }
+    // err = DB.AutoMigrate(&Customer{}, &Order{})
+    // if err != nil {
+    //     log.Fatalf("Error migrating database: %v", err)
+    // }
 }

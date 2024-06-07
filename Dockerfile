@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copy the source code
 COPY . .
-COPY .env .
+COPY .env.live .
 
 # Copy go mod and sum files
 RUN go mod tidy
@@ -18,7 +18,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /api
 FROM scratch
 
 
-COPY .env .
+COPY .env.live .
 # Copy the binary from the builder stage
 COPY --from=builder /api /api
 
@@ -26,4 +26,4 @@ COPY --from=builder /api /api
 EXPOSE 8080
 
 # Command to run the executable
-ENTRYPOINT ["/echo-api"]
+ENTRYPOINT ["/api"]
