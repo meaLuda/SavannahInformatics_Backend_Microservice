@@ -64,3 +64,6 @@ Run `go test -v ./tests`
 ## CI/CD
 Using GitHub Actions for CI.
 ![CI/CD Pipeline](ci_cd.png)
+
+
+<!-- Security scan triggered at 2026-09-01 00:54:12 -->
